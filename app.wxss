@@ -1,0 +1,45 @@
+/* app.wxss - 全局样式 · 古朴神秘风 */
+
+page {
+  background-color: #1A0F0A;
+  font-family: "Songti SC", "SimSun", "STSong", serif;
+  font-size: 28rpx;
+  color: #E8D5B5;
+}
+
+.container {
+  padding: 30rpx;
+}
+
+/* 按钮通用重置 */
+button {
+  margin: 0;
+  padding: 0;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+button::after {
+  border: none;
+}
+
+/* 全局装饰分割线 */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30rpx 0;
+  opacity: 0.4;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1rpx;
+  background: linear-gradient(90deg, transparent, #C8A96E, transparent);
+}
+
+.divider-icon {
+  margin: 0 20rpx;
+  color: #C8A96E;
+  font-size: 24rpx;
+}

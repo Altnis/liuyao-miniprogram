@@ -1,0 +1,294 @@
+<!--pages/result/result.wxml - 结果页UI结构·含爻辞展示+解卦-->
+<view class="container">
+  <!-- 卦名区域 -->
+  <view class="gua-header">
+    <text class="gua-name">{{guaName}}</text>
+    <text class="gua-type">{{guaType}}</text>
+    <text class="gua-time" wx:if="{{divinationTime}}">{{divinationTime}}</text>
+  </view>
+
+  <!-- 卦图展示 -->
+  <view class="gua-diagram">
+    <view class="yao-row" wx:for="{{yaoDetails}}" wx:key="position">
+      <view class="yao-position">{{item.positionName}}</view>
+      <view class="yao-line">
+        <!-- 阳爻 -->
+        <view wx:if="{{item.yinYang == '阳'}}" class="yang-line">
+          <view class="line-bar"></view>
+        </view>
+        <!-- 阴爻 -->
+        <view wx:else class="yin-line">
+          <view class="line-bar left"></view>
+          <view class="line-space"></view>
+          <view class="line-bar right"></view>
+        </view>
+      </view>
+      <view class="yao-marks">
+        <text wx:if="{{item.isShi}}" class="mark-shi">世</text>
+        <text wx:if="{{item.isYing}}" class="mark-ying">应</text>
+        <text wx:if="{{item.isChange}}" class="mark-change">变</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 六爻详情表格 -->
+  <view class="yao-detail-table">
+    <view class="table-label">六爻详析</view>
+    <view class="table-header">
+      <text class="col-position">爻位</text>
+      <text class="col-ganzhi">干支</text>
+      <text class="col-wuxing">五行</text>
+      <text class="col-liuqin">六亲</text>
+      <text class="col-liushen">六神</text>
+    </view>
+    <view class="table-row {{item.isShi ? 'row-shi' : ''}} {{item.isYing ? 'row-ying' : ''}}"
+          wx:for="{{yaoDetails}}"
+          wx:key="position"
+    >
+      <text class="col-position">{{item.positionName}}</text>
+      <text class="col-ganzhi">{{item.tiangan}}{{item.dizhi}}</text>
+      <text class="col-wuxing">{{item.wuxing}}</text>
+      <text class="col-liuqin">{{item.liuqin}}</text>
+      <text class="col-liushen">{{item.liushen}}</text>
+    </view>
+  </view>
+
+  <!-- 变爻信息 -->
+  <view class="bianyao-section" wx:if="{{hasBianGua}}">
+    <view class="section-header" bindtap="toggleBianyaoDetail">
+      <text class="section-title">变爻信息</text>
+      <text class="toggle-icon">{{showBianyaoDetail ? '▼' : '▶'}}</text>
+    </view>
+    <view wx:if="{{showBianyaoDetail}}" class="bianyao-detail">
+      <text class="biangua-name">变卦：{{biangua.guaName}}</text>
+      <view wx:if="{{bianyaoAnalysis}}" class="bianyao-desc">
+        <text class="bianyao-desc-text">{{bianyaoAnalysis.description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 解卦Tab区域 -->
+  <view class="tab-section" wx:if="{{interpretation}}">
+    <scroll-view class="tab-scroll" scroll-x="true">
+      <view class="tab-list">
+        <view
+          class="tab-item {{currentTab == item.key ? 'active' : ''}}"
+          wx:for="{{tabList}}"
+          wx:key="key"
+          data-tab="{{item.key}}"
+          bindtap="onTabChange"
+        >
+          <text>{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- Tab内容 -->
+    <view class="tab-content">
+
+      <!-- ★ 白话文解释 -->
+      <view wx:if="{{currentTab == 'baihua'}}" class="content-section">
+        <view class="content-card">
+          <text class="content-title">【卦辞白话文解释】</text>
+          <text class="content-text">{{interpretation.guaci_interpretation.baihua}}</text>
+        </view>
+        <!-- 各爻白话文 -->
+        <view class="content-card" wx:for="{{interpretation.yaoci_interpretation}}" wx:key="position">
+          <text class="content-title">【{{item.positionName}} 白话文解释】</text>
+          <text class="content-text">{{item.baihua}}</text>
+        </view>
+      </view>
+
+      <!-- 爻辞详解 -->
+      <view wx:elif="{{currentTab == 'yaoci'}}" class="content-section">
+        <view class="content-card">
+          <text class="content-title">【卦辞】</text>
+          <text class="content-text">{{guaData.guaci}}</text>
+        </view>
+        <view class="content-card" wx:if="{{guaData.tuanci}}">
+          <text class="content-title">【彖辞】</text>
+          <text class="content-text">{{guaData.tuanci}}</text>
+        </view>
+        <view class="content-card">
+          <text class="content-title">【象辞】</text>
+          <text class="content-text">{{guaData.xiangci}}</text>
+        </view>
+        <view
+          class="yaoci-card {{item.isChange ? 'yaoci-card-change' : ''}}"
+          wx:for="{{yaociList}}"
+          wx:key="position"
+        >
+          <view class="yaoci-card-header">
+            <text class="yaoci-card-title">{{item.yaociTitle}}</text>
+            <text wx:if="{{item.isChange}}" class="yaoci-card-bian">变</text>
+          </view>
+          <text class="yaoci-card-text">{{item.yaociContent}}</text>
+          <view wx:if="{{item.xiaoxiangContent}}" class="yaoci-card-xiaoxiang">
+            <text class="xiaoxiang-inline-label">象曰：</text>
+            <text class="xiaoxiang-inline-text">{{item.xiaoxiangContent}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 卦辞原文 -->
+      <view wx:elif="{{currentTab == 'guaci'}}" class="content-section">
+        <view class="content-card">
+          <text class="content-title">【卦辞】</text>
+          <text class="content-text">{{guaData.guaci}}</text>
+        </view>
+        <view class="content-card" wx:if="{{guaData.tuanci}}">
+          <text class="content-title">【彖辞】</text>
+          <text class="content-text">{{guaData.tuanci}}</text>
+        </view>
+        <view class="content-card">
+          <text class="content-title">【象辞】</text>
+          <text class="content-text">{{guaData.xiangci}}</text>
+        </view>
+      </view>
+
+      <!-- 邵雍河洛理数解卦 -->
+      <view wx:elif="{{currentTab == 'shaoyong'}}" class="content-section">
+        <view class="content-card">
+          <text class="content-title">【卦辞·邵雍解】</text>
+          <text class="content-subtitle" wx:if="{{interpretation.guaci_interpretation.shaoyong.phrase}}">
+            {{interpretation.guaci_interpretation.shaoyong.phrase}}
+          </text>
+          <text class="content-text">{{interpretation.guaci_interpretation.shaoyong.detail}}</text>
+        </view>
+        <!-- 各爻邵雍解 -->
+        <view class="content-card" wx:for="{{interpretation.yaoci_interpretation}}" wx:key="position">
+          <text class="content-title">【{{item.positionName}}·邵雍解】</text>
+          <text class="content-subtitle" wx:if="{{item.shaoyong.phrase}}">{{item.shaoyong.phrase}}</text>
+          <text class="content-text">{{item.shaoyong.detail}}</text>
+        </view>
+      </view>
+
+      <!-- 傅佩荣解卦手册 -->
+      <view wx:elif="{{currentTab == 'fupeirong'}}" class="content-section">
+        <view class="content-card">
+          <text class="content-title">【卦辞·傅佩荣解卦手册】</text>
+          <view class="fupei-grid">
+            <view class="fupei-row" wx:if="{{interpretation.guaci_interpretation.fupeirong.shiyun}}">
+              <text class="fupei-label">时运</text>
+              <text class="fupei-value">{{interpretation.guaci_interpretation.fupeirong.shiyun}}</text>
+            </view>
+            <view class="fupei-row" wx:if="{{interpretation.guaci_interpretation.fupeirong.caicun}}">
+              <text class="fupei-label">财运</text>
+              <text class="fupei-value">{{interpretation.guaci_interpretation.fupeirong.caicun}}</text>
+            </view>
+            <view class="fupei-row" wx:if="{{interpretation.guaci_interpretation.fupeirong.jiazhai}}">
+              <text class="fupei-label">家宅</text>
+              <text class="fupei-value">{{interpretation.guaci_interpretation.fupeirong.jiazhai}}</text>
+            </view>
+            <view class="fupei-row" wx:if="{{interpretation.guaci_interpretation.fupeirong.shenti}}">
+              <text class="fupei-label">身体</text>
+              <text class="fupei-value">{{interpretation.guaci_interpretation.fupeirong.shenti}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 各爻傅佩荣解 -->
+        <view class="content-card" wx:for="{{interpretation.yaoci_interpretation}}" wx:key="position">
+          <text class="content-title">【{{item.positionName}}·傅佩荣解】</text>
+          <view class="fupei-grid">
+            <view class="fupei-row" wx:if="{{item.fupeirong.shiyun}}">
+              <text class="fupei-label">时运</text>
+              <text class="fupei-value">{{item.fupeirong.shiyun}}</text>
+            </view>
+            <view class="fupei-row" wx:if="{{item.fupeirong.caicun}}">
+              <text class="fupei-label">财运</text>
+              <text class="fupei-value">{{item.fupeirong.caicun}}</text>
+            </view>
+            <view class="fupei-row" wx:if="{{item.fupeirong.jiazhai}}">
+              <text class="fupei-label">家宅</text>
+              <text class="fupei-value">{{item.fupeirong.jiazhai}}</text>
+            </view>
+            <view class="fupei-row" wx:if="{{item.fupeirong.shenti}}">
+              <text class="fupei-label">身体</text>
+              <text class="fupei-value">{{item.fupeirong.shenti}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 张铭仁解卦 -->
+      <view wx:elif="{{currentTab == 'zhangmingren'}}" class="content-section">
+        <view class="content-card">
+          <text class="content-title">【台湾张铭仁解卦】</text>
+          <text class="content-text" wx:if="{{interpretation.guaci_interpretation.zhangmingren.summary}}">
+            {{interpretation.guaci_interpretation.zhangmingren.summary}}
+          </text>
+          <view class="zmr-grid">
+            <view class="zmr-row" wx:for="{{interpretation.guaci_interpretation.zhangmingren.items}}" wx:key="index" wx:for-index="key" wx:for-item="val">
+              <text class="zmr-label">{{key}}</text>
+              <text class="zmr-value">{{val}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 断易天机 -->
+      <view wx:elif="{{currentTab == 'duanyitianji'}}" class="content-section">
+        <view class="content-card">
+          <text class="content-title">【断易天机】</text>
+          <text class="content-text">{{interpretation.guaci_interpretation.duanyitianji}}</text>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <!-- ★ 传统解卦（独立区块） -->
+  <view class="chuantong-section" wx:if="{{chuantongTabRows.length > 0}}">
+
+    <!-- 摘要（summary） -->
+    <view class="content-card" wx:if="{{chuantongSummaryText}}">
+      <text class="content-text">{{chuantongSummaryText}}</text>
+    </view>
+
+    <!-- 大象 -->
+    <view class="content-card" wx:if="{{chuantongDaXiang}}">
+      <text class="content-title">【大象】</text>
+      <text class="content-text">{{chuantongDaXiang}}</text>
+    </view>
+
+    <!-- 子Tab导航 -->
+    <scroll-view class="chuantong-tab-scroll" scroll-x="true">
+      <view class="tab-list">
+        <view
+          class="tab-item {{currentChuantongTab == item.key ? 'active' : ''}}"
+          wx:for="{{chuantongTabRows}}"
+          wx:key="key"
+          data-tab="{{item.key}}"
+          bindtap="onChuantongTabChange"
+        >
+          <text>{{item.label}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 子Tab内容 -->
+    <view class="content-card">
+      <view wx:for="{{chuantongTabRows}}" wx:key="key" wx:if="{{item.key == currentChuantongTab}}">
+        <text class="content-text">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 五行分析 -->
+  <view class="wuxing-section" wx:if="{{wuxingAnalysis}}">
+    <view class="section-header">
+      <text class="section-title">五行分析</text>
+    </view>
+    <view class="wuxing-content">
+      <text class="wuxing-text">{{wuxingAnalysis.wangShuai.description}}</text>
+      <text class="wuxing-text" wx:if="{{wuxingAnalysis.yongShen}}">用神：{{wuxingAnalysis.yongShen.description}}</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn-restart" bindtap="onRestart">重新占卜</button>
+    <button class="btn-history" bindtap="onViewHistory">查看历史</button>
+    <button class="btn-share" open-type="share">分享结果</button>
+  </view>
+</view>
