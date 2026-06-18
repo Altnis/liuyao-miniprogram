@@ -81,7 +81,7 @@ Page({
 
     // 如果没有数据，提示用户
     wx.showToast({
-      title: '未找到卦象数据',
+      title: '未找到卦例数据',
       icon: 'none'
     });
   },
@@ -364,7 +364,7 @@ Page({
    */
   onShareAppMessage: function() {
     return {
-      title: this.data.guaName + ' - 六爻占卜结果',
+      title: this.data.guaName + ' - 周易学习解读',
       path: '/pages/index/index'
     };
   }

@@ -22,8 +22,8 @@
   <!-- 空状态 -->
   <view class="empty-state" wx:elif="{{historyList.length == 0}}">
     <view class="empty-icon">卦</view>
-    <text class="empty-text">暂无占卜记录</text>
-    <text class="empty-hint">完成一次占卜后，记录将显示在这里</text>
+    <text class="empty-text">暂无学习记录</text>
+    <text class="empty-hint">完成一次排盘后，记录将显示在这里</text>
   </view>
 
   <!-- 历史记录列表 -->

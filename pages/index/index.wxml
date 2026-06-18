@@ -3,8 +3,8 @@
 
   <!-- 标题区域 -->
   <view class="header">
-    <text class="title">六爻占卜</text>
-    <text class="subtitle">诚心起卦 · 天机指引</text>
+    <text class="title">六爻排盘</text>
+    <text class="subtitle">诚心参悟 · 经典指引</text>
   </view>
 
   <!-- 龟壳区域 -->
@@ -13,10 +13,10 @@
     <view class="ritual-overlay" wx:if="{{showRitual}}" bindtap="onRitualTap">
       <view class="ritual-content">
         <view class="ritual-icon">☯</view>
-        <text class="ritual-title">诚心起卦</text>
+        <text class="ritual-title">诚心参悟</text>
         <view class="ritual-divider"></view>
-        <text class="ritual-hint">默念所求之事</text>
-        <text class="ritual-hint">摇动龟壳或点击起卦</text>
+        <text class="ritual-hint">静心思索所学之义</text>
+        <text class="ritual-hint">摇动龟壳或点击开始</text>
         <view class="ritual-btn">
           <text>点击开始</text>
         </view>
@@ -35,8 +35,8 @@
       />
       <!-- 龟壳中心文字 -->
       <view class="shell-overlay">
-        <text wx:if="{{!isDivining && currentYaoIndex == 0 && !showRitual}}" class="shell-text">起卦</text>
-        <text wx:elif="{{isDivining}}" class="shell-text anim-pulse">卜</text>
+        <text wx:if="{{!isDivining && currentYaoIndex == 0 && !showRitual}}" class="shell-text">开始</text>
+        <text wx:elif="{{isDivining}}" class="shell-text anim-pulse">悟</text>
         <text wx:elif="{{currentYaoIndex >= 6}}" class="shell-text shell-text-done">成</text>
         <text wx:elif="{{!showRitual}}" class="shell-text">续</text>
       </view>
@@ -105,7 +105,7 @@
   <!-- 操作按钮 -->
   <view class="action-area" wx:if="{{currentYaoIndex >= 6}}">
     <view class="btn-restart" bindtap="onTurtleTap">
-      <text>重新起卦</text>
+      <text>重新开始</text>
     </view>
   </view>
 
@@ -116,8 +116,8 @@
       <view class="divider-icon">☶</view>
       <view class="divider-line"></view>
     </view>
-    <text class="footer-text">三硬币法 · 共摇六次</text>
-    <text class="footer-hint">老阴老阳为变爻</text>
+    <text class="footer-text">周易启蒙 · 经典体验</text>
+    <text class="footer-hint">阴阳变化 · 六爻成卦</text>
   </view>
 
   <!-- 历史记录按钮 -->

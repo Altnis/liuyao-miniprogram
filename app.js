@@ -1,7 +1,7 @@
 // app.js - 小程序入口
 App({
   onLaunch: function() {
-    console.log('六爻占卜小程序启动');
+    console.log('周易学习小程序启动');
 
     // 获取系统信息
     try {

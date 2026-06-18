@@ -92,11 +92,11 @@
       <!-- 白话文解释 -->
       <view wx:if="{{currentTab == 'baihua'}}" class="content-section">
         <view class="content-block">
-          <text class="content-title">卦辞白话文解释</text>
+          <text class="content-title">卦辞通俗解读</text>
           <text class="content-text">{{interpretation.guaci_interpretation.baihua}}</text>
         </view>
         <view class="content-block" wx:for="{{interpretation.yaoci_interpretation}}" wx:key="position">
-          <text class="content-title">{{item.positionName}} 白话文解释</text>
+          <text class="content-title">{{item.positionName}} 通俗解读</text>
           <text class="content-text">{{item.baihua}}</text>
         </view>
       </view>
@@ -213,7 +213,7 @@
       <!-- 张铭仁解 -->
       <view wx:elif="{{currentTab == 'zhangmingren'}}" class="content-section">
         <view class="content-block">
-          <text class="content-title">张铭仁解卦</text>
+          <text class="content-title">张铭仁解读</text>
           <text class="content-text" wx:if="{{interpretation.guaci_interpretation.zhangmingren.summary}}">
             {{interpretation.guaci_interpretation.zhangmingren.summary}}
           </text>
@@ -271,13 +271,13 @@
     <view class="section-title">五行分析</view>
     <view class="wuxing-content">
       <text class="content-text">{{wuxingAnalysis.wangShuai.description}}</text>
-      <text class="content-text" wx:if="{{wuxingAnalysis.yongShen}}">用神：{{wuxingAnalysis.yongShen.description}}</text>
+      <text class="content-text" wx:if="{{wuxingAnalysis.yongShen}}">主爻：{{wuxingAnalysis.yongShen.description}}</text>
     </view>
   </view>
 
   <!-- 操作按钮 -->
   <view class="action-buttons">
-    <button class="btn-restart" bindtap="onRestart">重新占卜</button>
+    <button class="btn-restart" bindtap="onRestart">重新排盘</button>
     <button class="btn-history" bindtap="onViewHistory">查看历史</button>
     <button class="btn-share" open-type="share">分享结果</button>
   </view>

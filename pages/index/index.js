@@ -19,7 +19,7 @@ Page({
     showResult: false,       // 是否显示当前爻结果
     currentYaoResult: null,  // 当前爻结果值
     progress: 0,             // 进度百分比
-    progressText: '点击龟壳开始起卦', // 进度文字
+    progressText: '点击龟壳开始排盘', // 进度文字
     canClick: true,          // 是否可点击
     turtleShaking: false,    // 龟壳是否在摇晃
     showRitual: false        // 是否显示起卦仪式提示
@@ -143,7 +143,7 @@ Page({
       showResult: false,
       currentYaoResult: null,
       progress: 0,
-      progressText: '点击龟壳开始起卦',
+      progressText: '点击龟壳开始排盘',
       canClick: true,
       turtleShaking: false,
       showRitual: false
@@ -200,7 +200,7 @@ Page({
       isDivining: true,
       canClick: false,
       turtleShaking: true,
-      progressText: '正在起第' + (currentIndex + 1) + '爻...',
+      progressText: '正在排第' + (currentIndex + 1) + '爻...',
       showResult: false
     });
 
@@ -221,7 +221,7 @@ Page({
         var newProgress = Math.round((currentIndex + 1) / 6 * 100);
         var newProgressText = currentIndex < 5
           ? '第' + (currentIndex + 1) + '爻成，还剩' + (5 - currentIndex) + '爻'
-          : '起卦完成！';
+          : '排盘完成！';
 
         that.setData({
           currentYaoIndex: currentIndex + 1,
@@ -247,7 +247,7 @@ Page({
         if (currentIndex >= 5) {
           that.setData({
             canClick: false,
-            progressText: '起卦完成！正在生成结果...',
+            progressText: '排盘完成！正在生成结果...',
             showRitual: false
           });
           setTimeout(function() {
@@ -256,12 +256,12 @@ Page({
         }
       } catch (e) {
         console.error('[起卦] 生成爻失败:', e);
-        wx.showToast({ title: '起卦失败，请重试', icon: 'none' });
+        wx.showToast({ title: '排盘失败，请重试', icon: 'none' });
         that.setData({
           isDivining: false,
           turtleShaking: false,
           canClick: true,
-          progressText: '起卦失败，请重试'
+          progressText: '排盘失败，请重试'
         });
       }
     }, 800);
@@ -298,7 +298,7 @@ Page({
       }
 
       if (!guaInfo) {
-        wx.showToast({ title: '未知卦象，请重试', icon: 'none' });
+        wx.showToast({ title: '未知卦例，请重试', icon: 'none' });
         this.setData({ canClick: true });
         return;
       }
@@ -418,7 +418,7 @@ Page({
    */
   onShareAppMessage: function() {
     return {
-      title: '六爻占卜 - 古老的智慧',
+      title: '周易学习 - 六爻排盘',
       path: '/pages/index/index'
     };
   }

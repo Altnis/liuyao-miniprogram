@@ -1,5 +1,5 @@
 {
-  "description": "六爻占卜微信小程序",
+  "description": "周易学习微信小程序",
   "packOptions": {
     "ignore": [],
     "include": []
@@ -48,8 +48,8 @@
   },
   "compileType": "miniprogram",
   "libVersion": "3.16.0",
-  "appid": "wx723a219c8f3ae740",
-  "projectname": "liuyao-divination",
+  "appid": "wx1ac42e44a5889832",
+  "projectname": "zhouyi-study",
   "condition": {},
   "simulatorPluginLibVersion": {},
   "editorSetting": {}

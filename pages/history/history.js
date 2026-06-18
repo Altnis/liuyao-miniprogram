@@ -244,7 +244,7 @@ Page({
    */
   onShareAppMessage: function() {
     return {
-      title: '六爻占卜 - 查看历史记录',
+      title: '周易学习 - 查看历史记录',
       path: '/pages/index/index'
     };
   }
