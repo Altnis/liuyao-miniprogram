@@ -168,13 +168,13 @@ Page({
    * 点击龟壳
    */
   onTurtleTap: function() {
-    if (!this.data.canClick) return;
-
+    // 已完成6爻，优先处理重新开始
     if (this.data.currentYaoIndex >= 6) {
-      // 已完成6爻，重新开始
       this.initDivination();
       return;
     }
+
+    if (!this.data.canClick) return;
 
     // 首次起卦显示仪式提示
     if (this.data.currentYaoIndex === 0 && !this._ritualDone && !this.data.isDivining) {
