@@ -1,14 +1,17 @@
-/* app.wxss - 全局样式 · 古朴神秘风 */
+/* app.wxss - 全局样式 · 新中式极简风 */
 
 page {
-  background-color: #1A0F0A;
-  font-family: "Songti SC", "SimSun", "STSong", serif;
+  background-color: #F8F5F0;
+  font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   font-size: 28rpx;
-  color: #E8D5B5;
+  color: #2C2C2C;
+  -webkit-font-smoothing: antialiased;
 }
 
 .container {
-  padding: 30rpx;
+  padding: 32rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* 按钮通用重置 */
@@ -17,29 +20,112 @@ button {
   padding: 0;
   line-height: inherit;
   font-size: inherit;
+  background: transparent;
 }
 
 button::after {
   border: none;
 }
 
-/* 全局装饰分割线 */
+/* 通用卡片 */
+.card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+/* 通用按钮 - 主色 */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 48rpx;
+  background: #C45A3C;
+  color: #FFFFFF;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  letter-spacing: 2rpx;
+  transition: opacity 0.2s;
+}
+
+.btn-primary:active {
+  opacity: 0.85;
+}
+
+/* 通用按钮 - 次要 */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 48rpx;
+  background: #FDF2EF;
+  color: #C45A3C;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  letter-spacing: 2rpx;
+  transition: opacity 0.2s;
+}
+
+.btn-secondary:active {
+  opacity: 0.85;
+}
+
+/* 通用按钮 - 幽灵 */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 48rpx;
+  background: transparent;
+  color: #8C8377;
+  border: 1rpx solid #E8E0D6;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  letter-spacing: 2rpx;
+  transition: opacity 0.2s;
+}
+
+.btn-ghost:active {
+  opacity: 0.85;
+}
+
+/* 通用分割线 */
 .divider {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 30rpx 0;
-  opacity: 0.4;
 }
 
 .divider-line {
   flex: 1;
   height: 1rpx;
-  background: linear-gradient(90deg, transparent, #C8A96E, transparent);
+  background: #E8E0D6;
 }
 
 .divider-icon {
   margin: 0 20rpx;
-  color: #C8A96E;
+  color: #B8956A;
   font-size: 24rpx;
+}
+
+/* 标签 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 14rpx;
+  font-size: 22rpx;
+  border-radius: 8rpx;
+  background: #FDF2EF;
+  color: #C45A3C;
+}
+
+/* section 标题 */
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #2C2C2C;
+  margin-bottom: 20rpx;
 }

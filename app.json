@@ -5,11 +5,11 @@
     "pages/history/history"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#1A0F0A",
+    "navigationBarBackgroundColor": "#F8F5F0",
     "navigationBarTitleText": "六爻占卜",
-    "navigationBarTextStyle": "white",
-    "backgroundColor": "#1A0F0A",
-    "backgroundTextStyle": "light"
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F8F5F0",
+    "backgroundTextStyle": "dark"
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json"

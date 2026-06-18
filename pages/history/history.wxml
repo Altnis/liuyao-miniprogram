@@ -1,5 +1,6 @@
-<!--pages/history/history.wxml - 历史记录页UI-->
+<!--pages/history/history.wxml - 历史记录页UI·新中式极简风-->
 <view class="container">
+
   <!-- 标题区域 -->
   <view class="header">
     <view class="header-left" bindtap="goBack">
@@ -20,7 +21,7 @@
 
   <!-- 空状态 -->
   <view class="empty-state" wx:elif="{{historyList.length == 0}}">
-    <text class="empty-icon">📜</text>
+    <view class="empty-icon">卦</view>
     <text class="empty-text">暂无占卜记录</text>
     <text class="empty-hint">完成一次占卜后，记录将显示在这里</text>
   </view>
@@ -44,12 +45,12 @@
       <!-- 记录内容 -->
       <view class="record-content">
         <view class="record-header">
-          <text class="record-date">{{item.date}}</text>
           <text class="record-gua-name">{{item.guaName}}</text>
+          <text class="record-date">{{item.date}}</text>
         </view>
         <view class="record-footer">
           <text class="record-gua-xuhao">第{{item.guaXuhao}}卦</text>
-          <text class="record-arrow" wx:if="{{!isEditing}}">▶</text>
+          <text class="record-arrow" wx:if="{{!isEditing}}">›</text>
         </view>
       </view>
     </view>

@@ -1,26 +1,14 @@
-<!--pages/index/index.wxml - 首页UI结构·古朴神秘风-->
+<!--pages/index/index.wxml - 首页UI结构·新中式极简风-->
 <view class="container">
-  <!-- 装饰顶纹 -->
-  <view class="top-ornament">
-    <view class="ornament-center">
-      <view class="ba-gua">☰</view>
-    </view>
-  </view>
 
   <!-- 标题区域 -->
   <view class="header">
     <text class="title">六爻占卜</text>
-    <view class="title-underline">
-      <view class="underline-seal"></view>
-    </view>
     <text class="subtitle">诚心起卦 · 天机指引</text>
   </view>
 
   <!-- 龟壳区域 -->
   <view class="shell-area">
-    <!-- 外层光晕 -->
-    <view class="shell-glow {{turtleShaking ? 'glow-active' : ''}}"></view>
-
     <!-- 起卦仪式提示层 -->
     <view class="ritual-overlay" wx:if="{{showRitual}}" bindtap="onRitualTap">
       <view class="ritual-content">
@@ -28,14 +16,14 @@
         <text class="ritual-title">诚心起卦</text>
         <view class="ritual-divider"></view>
         <text class="ritual-hint">默念所求之事</text>
-        <text class="ritual-hint">摇动龟壳起卦</text>
+        <text class="ritual-hint">摇动龟壳或点击起卦</text>
         <view class="ritual-btn">
           <text>点击开始</text>
         </view>
       </view>
     </view>
 
-    <!-- 真实龟壳图片 -->
+    <!-- 龟壳图片 -->
     <view
       class="shell-wrapper {{turtleShaking ? 'shell-shaking' : ''}} {{currentYaoIndex >= 6 ? 'shell-done' : ''}}"
       bindtap="onTurtleTap"
@@ -45,16 +33,16 @@
         src="/images/guixiao.gif"
         mode="aspectFit"
       />
-      <!-- 龟壳中心文字覆盖层 -->
+      <!-- 龟壳中心文字 -->
       <view class="shell-overlay">
         <text wx:if="{{!isDivining && currentYaoIndex == 0 && !showRitual}}" class="shell-text">起卦</text>
         <text wx:elif="{{isDivining}}" class="shell-text anim-pulse">卜</text>
-        <text wx:elif="{{currentYaoIndex >= 6}}" class="shell-text">成</text>
+        <text wx:elif="{{currentYaoIndex >= 6}}" class="shell-text shell-text-done">成</text>
         <text wx:elif="{{!showRitual}}" class="shell-text">续</text>
       </view>
     </view>
 
-    <!-- 铜钱掉落动画层 -->
+    <!-- 铜钱掉落动画 -->
     <view class="coins-area" wx:if="{{isDivining}}">
       <view class="coin coin-1"></view>
       <view class="coin coin-2"></view>
@@ -69,36 +57,29 @@
   </view>
 
   <!-- 爻位显示区域 -->
-  <view class="yao-display-area" wx:if="{{yaoDisplay.length > 0}}">
-    <!-- 卦象展示卷轴 -->
-    <view class="scroll-frame">
-      <view class="scroll-top"></view>
-      <view class="scroll-body">
-        <view
-          class="yao-item {{item.isChange ? 'yao-change' : ''}}"
-          wx:for="{{yaoDisplay}}"
-          wx:key="position"
-        >
-          <view class="yao-pos-label">{{item.position}}</view>
-          <view class="yao-line-area">
-            <!-- 阳爻 -->
-            <view wx:if="{{item.yinYang == '阳'}}" class="yang-yao">
-              <view class="yao-bar"></view>
-            </view>
-            <!-- 阴爻 -->
-            <view wx:elif="{{item.yinYang == '阴'}}" class="yin-yao">
-              <view class="yao-bar left"></view>
-              <view class="yao-gap"></view>
-              <view class="yao-bar right"></view>
-            </view>
-          </view>
-          <view class="yao-info-area">
-            <text class="yao-type-label">{{item.typeName}}</text>
-            <text wx:if="{{item.isChange}}" class="yao-bian-mark">变</text>
-          </view>
+  <view class="yao-display-area card" wx:if="{{yaoDisplay.length > 0}}">
+    <view
+      class="yao-item {{item.isChange ? 'yao-change' : ''}}"
+      wx:for="{{yaoDisplay}}"
+      wx:key="position"
+    >
+      <view class="yao-pos-label">{{item.position}}</view>
+      <view class="yao-line-area">
+        <!-- 阳爻 -->
+        <view wx:if="{{item.yinYang == '阳'}}" class="yang-yao">
+          <view class="yao-bar"></view>
+        </view>
+        <!-- 阴爻 -->
+        <view wx:elif="{{item.yinYang == '阴'}}" class="yin-yao">
+          <view class="yao-bar left"></view>
+          <view class="yao-gap"></view>
+          <view class="yao-bar right"></view>
         </view>
       </view>
-      <view class="scroll-bottom"></view>
+      <view class="yao-info-area">
+        <text class="yao-type-label">{{item.typeName}}</text>
+        <text wx:if="{{item.isChange}}" class="yao-bian-mark">变</text>
+      </view>
     </view>
   </view>
 
@@ -122,12 +103,8 @@
   </view>
 
   <!-- 操作按钮 -->
-  <view class="action-area">
-    <view
-      wx:if="{{currentYaoIndex >= 6}}"
-      class="btn-ancient btn-restart"
-      bindtap="onTurtleTap"
-    >
+  <view class="action-area" wx:if="{{currentYaoIndex >= 6}}">
+    <view class="btn-restart" bindtap="onTurtleTap">
       <text>重新起卦</text>
     </view>
   </view>
@@ -136,14 +113,14 @@
   <view class="footer">
     <view class="divider">
       <view class="divider-line"></view>
-      <text class="divider-icon">☶</text>
+      <view class="divider-icon">☶</view>
       <view class="divider-line"></view>
     </view>
     <text class="footer-text">三硬币法 · 共摇六次</text>
     <text class="footer-hint">老阴老阳为变爻</text>
   </view>
 
-  <!-- 历史记录按钮（固定底部） -->
+  <!-- 历史记录按钮 -->
   <view class="btn-history-fixed" bindtap="onViewHistory">
     <text>历史记录</text>
   </view>
