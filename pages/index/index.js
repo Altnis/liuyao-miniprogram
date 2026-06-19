@@ -7,8 +7,8 @@ var guaData = require('../../utils/guaData.js');
 var tianganDizhi = require('../../utils/tianganDizhi.js');
 
 // 摇一摇检测参数
-var SHAKE_THRESHOLD = 18; // 加速度阈值（降低以适配轻摇）
-var SHAKE_INTERVAL = 600; // 两次摇动最小间隔(ms)
+var SHAKE_THRESHOLD = 15; // 加速度阈值（适当降低以提高灵敏度）
+var SHAKE_INTERVAL = 400; // 两次摇动最小间隔(ms)
 
 Page({
   data: {
@@ -38,31 +38,38 @@ Page({
   onShow: function() {
     // 开启加速度计，用于摇一摇
     var that = this;
-    // 先注册监听，再开启加速计
-    // 注意：必须在 startAccelerometer 之前注册，否则可能丢失事件
     try {
+      // 先停止再启动，避免重复注册
+      wx.stopAccelerometer();
       wx.onAccelerometerChange(function(res) {
         that.onAccelerometerChange(res);
       });
       wx.startAccelerometer({
-        interval: 'ui', // ui模式约60ms采样，比normal(200ms)更灵敏
+        interval: 'game',
         success: function() {
-          console.log('[摇一摇] 加速度计已启动');
+          console.log('[摇一摇] 加速度计已启动(game模式)');
         },
         fail: function(err) {
-          console.log('[摇一摇] 加速度计启动失败:', err);
-          // 尝试用game模式（更高频率）
+          console.warn('[摇一摇] game模式失败，尝试ui模式:', err);
           wx.startAccelerometer({
-            interval: 'game',
-            fail: function() {
-              console.log('[摇一摇] 加速度计完全不可用');
+            interval: 'ui',
+            success: function() {
+              console.log('[摇一摇] 加速度计已启动(ui模式)');
+            },
+            fail: function(err2) {
+              console.warn('[摇一摇] ui模式失败，尝试normal模式:', err2);
+              wx.startAccelerometer({
+                interval: 'normal',
+                fail: function(err3) {
+                  console.error('[摇一摇] 加速度计完全不可用:', err3);
+                }
+              });
             }
           });
         }
       });
     } catch (e) {
-      // 部分设备不支持加速度计，忽略
-      console.log('[摇一摇] 加速度计不可用:', e);
+      console.error('[摇一摇] 加速度计初始化异常:', e);
     }
   },
 
@@ -87,7 +94,7 @@ Page({
    * 加速度变化回调 - 检测摇一摇
    */
   onAccelerometerChange: function(res) {
-    // 不在可起卦状态时忽略
+    // 不在可排盘状态时忽略
     if (!this.data.canClick || this.data.isDivining || this.data.currentYaoIndex >= 6) {
       return;
     }
@@ -109,23 +116,18 @@ Page({
       this._lastShakeTime = now;
       console.log('[摇一摇] 检测到摇动，加速度变化:', (deltaX + deltaY + deltaZ).toFixed(1));
 
-      // 首次摇动显示仪式提示，不直接起卦
-      if (this.data.currentYaoIndex === 0 && !this._ritualDone) {
-        this.setData({ showRitual: true });
-        // 震动反馈
-        try {
-          wx.vibrateShort({ type: 'medium' });
-        } catch (e) {}
-        return;
-      }
-
       // 震动反馈
       try {
         wx.vibrateShort({ type: 'medium' });
-      } catch (e) {
-        // 忽略
+      } catch (e) {}
+
+      // 关闭仪式弹窗（如果正在显示）
+      if (this.data.showRitual) {
+        this._ritualDone = true;
+        this.setData({ showRitual: false });
       }
 
+      // 直接触发排盘
       this.startDivination();
     }
   },
