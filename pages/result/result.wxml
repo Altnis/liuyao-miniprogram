@@ -280,10 +280,10 @@
         </view>
       </view>
 
-      <!-- 断易天机 -->
+      <!-- 古籍参考 -->
       <view wx:elif="{{currentTab == 'duanyitianji'}}" class="content-section">
         <view class="content-block">
-          <text class="content-title">断易天机</text>
+          <text class="content-title">古籍参考</text>
           <text class="content-text">{{interpretation.guaci_interpretation.duanyitianji}}</text>
         </view>
       </view>

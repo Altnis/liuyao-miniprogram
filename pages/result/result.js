@@ -44,7 +44,7 @@ Page({
       {key: 'shaoyong', name: '邵雍解'},
       {key: 'fupeirong', name: '傅佩荣'},
       {key: 'zhangmingren', name: '张铭仁'},
-      {key: 'duanyitianji', name: '断易天机'}
+      {key: 'duanyitianji', name: '古籍参考'}
     ],
 
     // 日干（用于六亲和六神计算）
@@ -149,7 +149,7 @@ Page({
           {key: 'yunShi', label: '运势'},
           {key: 'shiYe', label: '事业'},
           {key: 'jingShang', label: '经商'},
-          {key: 'qiuMing', label: '求名'},
+          {key: 'qiuMing', label: '进修'},
           {key: 'hunLian', label: '婚恋'},
           {key: 'jueCe', label: '决策'}
         ];
