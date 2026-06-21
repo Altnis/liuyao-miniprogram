@@ -234,12 +234,23 @@
   border-top: 1rpx solid #F0EBE4;
 }
 
+.biangua-header {
+  margin: 16rpx 0 12rpx;
+}
+
 .biangua-name {
   display: block;
-  font-size: 28rpx;
-  color: #2C2C2C;
+  font-size: 36rpx;
+  color: #C45A3C;
   font-weight: bold;
-  margin-bottom: 12rpx;
+  letter-spacing: 4rpx;
+}
+
+.biangua-diagram {
+  margin: 12rpx 0;
+  padding: 16rpx;
+  background: #FAFAF8;
+  border-radius: 12rpx;
 }
 
 .bianyao-desc-text {

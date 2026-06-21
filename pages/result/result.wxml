@@ -56,16 +56,70 @@
     </view>
   </view>
 
-  <!-- 变爻信息 -->
+  <!-- 变卦信息 -->
   <view class="card" wx:if="{{hasBianGua}}">
     <view class="section-header" bindtap="toggleBianyaoDetail">
-      <text class="section-title">变爻信息</text>
+      <text class="section-title">变卦信息</text>
       <text class="toggle-icon">{{showBianyaoDetail ? '−' : '+'}}</text>
     </view>
     <view wx:if="{{showBianyaoDetail}}" class="bianyao-detail">
-      <text class="biangua-name">变卦：{{biangua.guaName}}</text>
+      <!-- 变爻分析 -->
       <view wx:if="{{bianyaoAnalysis}}" class="bianyao-desc">
         <text class="bianyao-desc-text">{{bianyaoAnalysis.description}}</text>
+      </view>
+
+      <!-- 变卦卦名 + 卦辞 -->
+      <view class="biangua-header">
+        <text class="biangua-name">{{biangua.guaName}}</text>
+      </view>
+      <view class="content-block" wx:if="{{biangua.guaci}}">
+        <text class="content-title">卦辞</text>
+        <text class="content-text">{{biangua.guaci}}</text>
+      </view>
+
+      <!-- 变卦卦图 -->
+      <view class="gua-diagram biangua-diagram">
+        <view class="yao-row" wx:for="{{bianguaYaoDetails}}" wx:key="position">
+          <view class="yao-position">{{item.positionName}}</view>
+          <view class="yao-line">
+            <view wx:if="{{item.yinYang == '阳'}}" class="yang-line">
+              <view class="line-bar"></view>
+            </view>
+            <view wx:else class="yin-line">
+              <view class="line-bar left"></view>
+              <view class="line-space"></view>
+              <view class="line-bar right"></view>
+            </view>
+          </view>
+          <view class="yao-marks">
+            <text wx:if="{{item.isShi}}" class="mark-shi">世</text>
+            <text wx:if="{{item.isYing}}" class="mark-ying">应</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 变卦六爻详析 -->
+      <view class="yao-detail-list">
+        <view class="yao-detail-item {{item.isShi ? 'row-shi' : ''}} {{item.isYing ? 'row-ying' : ''}}"
+              wx:for="{{bianguaYaoDetails}}" wx:key="position">
+          <view class="detail-top">
+            <text class="detail-position">{{item.positionName}}</text>
+            <text class="detail-ganzhi">{{item.tiangan}}{{item.dizhi}}</text>
+            <text class="detail-wuxing">{{item.wuxing}}</text>
+            <text class="detail-liuqin">{{item.liuqin}}</text>
+            <text class="detail-liushen">{{item.liushen}}</text>
+          </view>
+          <view class="detail-tags">
+            <text wx:if="{{item.isShi}}" class="tag tag-shi">世</text>
+            <text wx:if="{{item.isYing}}" class="tag tag-ying">应</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 变卦象辞 -->
+      <view class="content-block" wx:if="{{biangua.xiangci}}">
+        <text class="content-title">象辞</text>
+        <text class="content-text">{{biangua.xiangci}}</text>
       </view>
     </view>
   </view>

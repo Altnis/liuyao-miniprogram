@@ -116,6 +116,13 @@ Page({
       var biangua = bianyao.processBianYao(yaoResults, guaDataObj);
       var hasBianGua = biangua !== null;
 
+      // 构建变卦六爻详情
+      var bianguaYaoDetails = [];
+      if (hasBianGua && biangua.yaoResults) {
+        var bianShiYing = shiying.calculateShiYing(biangua.guaXuhao);
+        bianguaYaoDetails = this.buildYaoDetails(biangua.guaXuhao, biangua.yaoResults, bianShiYing, dayGan);
+      }
+
       // 变爻分析
       var bianyaoAnalysis = bianyao.analyzeBianYao(yaoResults, shiYing);
 
@@ -167,6 +174,7 @@ Page({
         yingPosition: shiYing.ying,
         hasBianGua: hasBianGua,
         biangua: biangua,
+        bianguaYaoDetails: bianguaYaoDetails,
         bianyaoAnalysis: bianyaoAnalysis,
         dayGan: dayGan,
         dayZhi: dayZhi,
