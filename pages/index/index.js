@@ -247,13 +247,18 @@ Page({
 
         // 如果6爻全部完成
         if (currentIndex >= 5) {
+          // 立即锁定数据，防止用户快速点击清空
+          var finalResults = newResults.slice();
+          var finalDisplay = newDisplay.slice();
           that.setData({
             canClick: false,
+            isDivining: false,
+            turtleShaking: false,
             progressText: '排盘完成！正在生成结果...',
             showRitual: false
           });
           setTimeout(function() {
-            that.onDivinationComplete();
+            that.onDivinationComplete(finalResults, finalDisplay);
           }, 1000);
         }
       } catch (e) {
@@ -272,9 +277,11 @@ Page({
   /**
    * 起卦完成，构建完整数据并跳转
    */
-  onDivinationComplete: function() {
+  onDivinationComplete: function(passedResults, passedDisplay) {
     try {
-      var yaoResults = this.data.yaoResults;
+      // 优先使用传入的数据（防止快速点击导致数据被清空）
+      var yaoResults = passedResults || this.data.yaoResults;
+      var yaoDisplay = passedDisplay || this.data.yaoDisplay;
 
       // 方法1: 使用 guaData.getGuaByYaoResults
       var guaInfo = guaData.getGuaByYaoResults(yaoResults);
@@ -306,7 +313,7 @@ Page({
       }
 
       // 构建完整卦象数据
-      var fullGuaData = this.buildGuaData(guaInfo);
+      var fullGuaData = this.buildGuaData(guaInfo, yaoResults, yaoDisplay);
 
       // 保存到本地存储
       try {
@@ -340,13 +347,13 @@ Page({
    * @param {Object} guaInfo 卦基本信息
    * @returns {Object} 完整卦象数据
    */
-  buildGuaData: function(guaInfo) {
+  buildGuaData: function(guaInfo, yaoResults, yaoDisplay) {
     return {
       guaName: guaInfo.name,
       guaXuhao: guaInfo.xuhao,
       guaType: '本卦',
-      yaoResults: this.data.yaoResults,
-      yaoDisplay: this.data.yaoDisplay,
+      yaoResults: yaoResults || this.data.yaoResults,
+      yaoDisplay: yaoDisplay || this.data.yaoDisplay,
       guaci: guaInfo.guaci,
       tuanci: guaInfo.tuanci || '',
       xiangci: guaInfo.xiangci || guaInfo.da_xiang || '',
